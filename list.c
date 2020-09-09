@@ -1,6 +1,6 @@
-#include "exception.h"
 #include "list.h"
 #include <stdlib.h>
+#include <stdio.h>
 /*allocates memory for the list*/
 struct list init(void)
 {
@@ -8,7 +8,7 @@ struct list init(void)
 	new_list.items = malloc(sizeof(void*) * STARTING_SIZE);
 	if (new_list.items == NULL)
 	{
-		throw_exp("Memory allocation failed");
+		perror("Memory allocation failed");
 		new_list.size = 0;
 		new_list.length = 0;
 		return new_list;
@@ -28,7 +28,7 @@ bool insert(struct list *ls, void* item)
 		temp = realloc(ls->items, sizeof(void *) * ls->size * GROWTH_FACTOR);
 		if(temp == NULL)
 		{
-			throw_exp("Memory allocation failed");
+			perror("Memory allocation failed");
 			free_ls(ls);
 			return false;
 		}
@@ -61,7 +61,7 @@ void free_ls(struct list *ls)
 {
 	if(ls->items != NULL )
 	{
-		free(ls->items);
+		perror(ls->items);
 		ls->items = NULL;
 	}
 	ls->length = 0;
